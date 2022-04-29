@@ -5,21 +5,21 @@
 ## Autostart Programs
 
 # Kill already running process
-_ps=(picom dunst ksuperkey mpd xfce-polkit xfce4-power-manager)
-for _prs in "${_ps[@]}"; do
-	if [[ `pidof ${_prs}` ]]; then
-		killall -9 ${_prs}
-	fi
-done
+#_ps=(picom dunst ksuperkey mpd xfce-polkit xfce4-power-manager)
+#for _prs in "${_ps[@]}"; do
+#	if [[ `pidof ${_prs}` ]]; then
+#		killall -9 ${_prs}
+#	fi
+#done
 
 # Fix cursor
 xsetroot -cursor_name left_ptr
 
 # Polkit agent
-/usr/lib/xfce-polkit/xfce-polkit &
+#/usr/lib/xfce-polkit/xfce-polkit &
 
 # Enable power management
-xfce4-power-manager &
+#xfce4-power-manager &
 
 # Enable Super Keys For Menu
 ksuperkey -e 'Super_L=Alt_L|F1' &

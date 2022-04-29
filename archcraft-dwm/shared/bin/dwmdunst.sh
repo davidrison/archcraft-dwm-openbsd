@@ -4,8 +4,8 @@
 ## Everyone is permitted to copy and distribute copies of this file under GNU-GPL3
 
 ## Launch dunst daemon
-if [[ `pidof dunst` ]]; then
-	pkill dunst
-fi
+#if [[ `pidof dunst` ]]; then
+#	pkill dunst
+#fi
 
 dunst -config /usr/share/archcraft/dwm/dunstrc &

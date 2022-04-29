@@ -354,6 +354,9 @@ static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
 
+/* DWR TODO */
+static void logInfo(char *str, int new);
+
 /* variables */
 static Systray *systray = NULL;
 static const char broken[] = "broken";
@@ -2567,6 +2570,7 @@ void run(void) {
 }
 
 void scan(void) {
+	logInfo("DWM inside SCAN",0);
   unsigned int i, num;
   Window d1, d2, *wins = NULL;
   XWindowAttributes wa;
@@ -2926,6 +2930,7 @@ void showhide(Client *c) {
 void
 showtagpreview(int tag)
 {
+//logInfo("DWM SHOWTAGPREVIEW",0);
 	if (!selmon->previewshow  || !tag_preview ) {
 		XUnmapWindow(dpy, selmon->tagwin);
 		return;
@@ -2973,6 +2978,7 @@ void spawn(const Arg *arg) {
 }
 
 void switchtag(void) {
+	logInfo("DWM SWITCHTAG",0);
   	int i;
 	unsigned int occ = 0;
 	Client *c;
@@ -3013,6 +3019,7 @@ tabmode(const Arg *arg)
 }
 
 void tag(const Arg *arg) {
+	logInfo("DWM TAG",0);
   if (selmon->sel && arg->ui & TAGMASK) {
     selmon->sel->tags = arg->ui & TAGMASK;
     focus(NULL);
@@ -3021,6 +3028,7 @@ void tag(const Arg *arg) {
 }
 
 void tagmon(const Arg *arg) {
+	logInfo("DWM TAGMON",0);
   if (!selmon->sel || !mons->next)
     return;
   sendmon(selmon->sel, dirtomon(arg->i));
@@ -3062,6 +3070,7 @@ void togglefullscr(const Arg *arg) {
 }
 
 void toggletag(const Arg *arg) {
+	logInfo("DWM TOGGLETAG",0);
   unsigned int newtags;
 
   if (!selmon->sel)
@@ -3587,10 +3596,31 @@ void updatewmhints(Client *c) {
   }
 }
 
+void logInfo(char *str, int new) {
+    /*char *w;
+
+    if (new == 1) {
+    	w = "w";
+    }
+    else {
+	w = "a";
+    }
+
+    FILE *fptr = fopen("/tmp/dwm.log", w);
+    if (fptr == NULL)
+    {
+        printf("Could not open file");
+        return;
+    }
+   
+    fprintf(fptr,"%s\n", str);
+    fclose(fptr); */
+}
+
 void view(const Arg *arg) {
   int i;
   unsigned int tmptag;
-
+//logInfo("insside view",0);
   if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
     return;
   switchtag();
@@ -3732,13 +3762,17 @@ int main(int argc, char *argv[]) {
     XCloseDisplay(dpy);
     return 0;
   }
+  logInfo("DWM MAIN",1);
   checkotherwm();
+  logInfo("DWM after checkotherwm",0);
   setup();
+  logInfo("DWM after setup",0);
 #ifdef __OpenBSD__
-  if (pledge("stdio rpath proc exec", NULL) == -1)
-    die("pledge");
+  //if (pledge("rpath proc exec", NULL) == -1)
+    //die("pledge");
 #endif /* __OpenBSD__ */
   scan();
+  logInfo("DWM after scan",0);
   run();
   if (restart)
     execvp(argv[0], argv);
