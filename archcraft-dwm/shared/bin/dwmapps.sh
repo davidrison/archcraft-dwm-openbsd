@@ -6,7 +6,7 @@
 ## Launch Applications
 
 if [[ "$1" == "-f" ]]; then
-	thunar
+	pcmanfm	
 elif [[ "$1" == "-e" ]]; then
 	geany
 elif [[ "$1" == "-w" ]]; then
