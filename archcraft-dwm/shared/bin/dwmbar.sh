@@ -12,7 +12,7 @@ cpu_info() {
 
 ## Memory
 memory() {
-	printf "^c#C678DD^^b#1e222a^   $(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g) "
+	printf "^c#C678DD^^b#1e222a^   $(free | awk '/^Mem/ { print $3 }' | sed s/i//g) "
 }
 
 ## Wi-fi
@@ -39,6 +39,30 @@ updates() {
 		printf "^c#98C379^  $updates"" updates"
 	fi
 }
+
+battery_bsd() {
+	BAT=$(apm -l)
+	AC=$(apm -b)
+
+	if [[ "$AC" == "3" ]]; then
+		printf "^c#E49263^  $BAT%%"
+	elif [[ ("$AC" == "0") && ("$BAT" -ge "90") ]]; then
+		printf "^c#E06C75^  Full"
+	else
+		if [[ ("$BAT" -ge "0") && ("$BAT" -le "20") ]]; then
+			printf "^c#E98CA4^  $BAT%%"
+		elif [[ ("$BAT" -ge "20") && ("$BAT" -le "40") ]]; then
+			printf "^c#E98CA4^  $BAT%%"
+		elif [[ ("$BAT" -ge "40") && ("$BAT" -le "60") ]]; then
+			printf "^c#E98CA4^  $BAT%%"
+		elif [[ ("$BAT" -ge "60") && ("$BAT" -le "80") ]]; then
+			printf "^c#E98CA4^  $BAT%%"
+		elif [[ ("$BAT" -ge "80") && ("$BAT" -le "100") ]]; then
+			printf "^c#E98CA4^  $BAT%%"
+		fi
+	fi
+}
+
 
 ## Battery Info
 battery() {
@@ -85,5 +109,5 @@ while true; do
   ##interval=$((interval + 1))
 
   ##sleep 1 && xsetroot -name "$(cpu_info) $(memory) $(wlan) $(clock)"
-  sleep 1 && xsetroot -name "$(clock)"
+  sleep 1 && xsetroot -name "$(battery_bsd) $(memory) $(clock)"
 done
