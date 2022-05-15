@@ -46,7 +46,7 @@ battery_bsd() {
 
 	if [[ "$AC" == "3" ]]; then
 		printf "^c#E49263^  $BAT%%"
-	elif [[ ("$AC" == "0") && ("$BAT" -ge "90") ]]; then
+	elif [[ ("$AC" == "0") && ("$BAT" -ge "98") ]]; then
 		printf "^c#E06C75^  Full"
 	else
 		if [[ ("$BAT" -ge "0") && ("$BAT" -le "20") ]]; then
